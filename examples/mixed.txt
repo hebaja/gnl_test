@@ -1,0 +1,38 @@
+This is a mixed file....
+it
+contains()
+
+
+
+lots of lines with differente patterns like this very long line which seems to be quite long and won't end
+
+this is a tab	let's if we can capture it
+
+
+
+______________________________
+////////////
+--------------------
+////////////
+______________________________
+
+a
+bb
+ccc
+dddd
+eeeee
+ffffff
+ggggggg
+hhhhhhhh
+iiiiiiiii
+jjjjjjjjjj
+kkkkkkkkk
+llllllll
+mmmmmmm
+nnnnnn
+ooooo
+pppp
+qqq
+rr
+s
+.

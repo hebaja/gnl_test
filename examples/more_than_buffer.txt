@@ -1,0 +1,6 @@
+This is just random text
+that is being used to test 
+the function get_next_line.
+I have already come across this concept in Java,
+in which we use some libraries such as:
+BuffereReader, Scanner and File.
