@@ -38,19 +38,6 @@ void redirect_all_stdout(void)
 	cr_redirect_stderr();
 }
 
-/*
-Test(test, test)
-{
-	int	fd;
-	char	*str;
-
-	fd = open("examples/more_than_buffer_no_end_nl.txt", O_RDONLY);
-	while ((str = get_next_line(fd)))
-		printf("%s", str);
-	close(fd);
-}
-*/
-
 Test(gnl_test_suite, test_file_lines_more_than_buffer, .init=redirect_all_stdout)
 {
 	int	fd;
@@ -61,36 +48,36 @@ Test(gnl_test_suite, test_file_lines_more_than_buffer, .init=redirect_all_stdout
 		printf("%s", str);
 	fflush(stdout);
 	cr_assert_stdout_eq_str(
-		 "This is just random text\n"
+		"This is just random text\n"
 		"that is being used to test \n"
-	    "the function get_next_line.\n"
+		"the function get_next_line.\n"
 		"I have already come across this concept in Java,\n"
-	    "in which we use some libraries such as:\n"
+		"in which we use some libraries such as:\n"
 		"BuffereReader, Scanner and File.\n",
-	    "Output was not expected."
+		"Output was not expected."
 	);
 	close(fd);
 }
 
 Test(gnl_test_suite, test_file_lines_more_than_buffer_no_end_nl)
 {
-    int fd;
-    char *str;
-    char result[1024] = "";
+	int fd;
+	char *str;
+	char result[1024] = "";
 
-    fd = open("examples/more_than_buffer_no_end_nl.txt", O_RDONLY);
-    while ((str = get_next_line(fd)))
+	fd = open("examples/more_than_buffer_no_end_nl.txt", O_RDONLY);
+	while ((str = get_next_line(fd)))
 	{
 		ft_strcat(result, str);
-        free(str);
-    }
-    close(fd);
-    cr_assert_str_eq(result,
-        "I have already come across this concept in Java,\n"
-        "in which we use some libraries such as:\n"
-        "BuffereReader, Scanner and File.",
-        "Output was not expected."
-    );
+		free(str);
+	}
+	close(fd);
+	cr_assert_str_eq(result,
+		"I have already come across this concept in Java,\n"
+		"in which we use some libraries such as:\n"
+		"BuffereReader, Scanner and File.",
+		"Output was not expected."
+);
 }
 
 Test(gnl_test_suite, test_file_one_line, .init=redirect_all_stdout)
@@ -107,18 +94,18 @@ Test(gnl_test_suite, test_file_one_line, .init=redirect_all_stdout)
 
 Test(gnl_test_suite, test_file_one_line_no_end_nl)
 {
-    int fd;
-    char *str;
-    char result[64] = "";
+	int fd;
+	char *str;
+	char result[64] = "";
 
-    fd = open("examples/one_line_no_nl.txt", O_RDONLY);
-    while ((str = get_next_line(fd)))
+	fd = open("examples/one_line_no_nl.txt", O_RDONLY);
+	while ((str = get_next_line(fd)))
 	{
 		ft_strcat(result, str);
-        free(str);
-    }
-    close(fd);
-    cr_assert_str_eq(result, "This file contains one line.");
+		free(str);
+	}
+	close(fd);
+	cr_assert_str_eq(result, "This file contains one line.");
 }
 
 Test(gnl_test_suite, test_file_one_short_line, .init=redirect_all_stdout)
@@ -133,36 +120,74 @@ Test(gnl_test_suite, test_file_one_short_line, .init=redirect_all_stdout)
 	cr_assert_stdout_eq_str("Short.\n", "Output not as expected.");	
 }
 
-Test(gnl_test_suite, test_file_one_shor_line_no_end_nl)
+Test(gnl_test_suite, test_empty_file_nl)
 {
-    int fd;
-    char *str;
-    char result[64] = "";
+	int	fd;
+	char	*str;
+	char	result[8];
 
-    fd = open("examples/one_short_line_no_nl.txt", O_RDONLY);
-    while ((str = get_next_line(fd)))
+	fd = open("examples/empty_nl.txt", O_RDONLY);
+	while((str = get_next_line(fd)))
 	{
 		ft_strcat(result, str);
-        free(str);
-    }
-    close(fd);
-    cr_assert_str_eq(result, "Short.");
+		free(str);
+	}
+	close(fd);
+	cr_assert_str_eq(result,
+		"\n",
+		"Output not as expected."
+	);
+}
+
+Test(gnl_test_suite, test_empty_file)
+{
+	int	fd;
+	char	*str;
+	char	result[8];
+
+	fd = open("examples/empty.txt", O_RDONLY);
+	while((str = get_next_line(fd)))
+	{
+		ft_strcat(result, str);
+		free(str);
+	}
+	close(fd);
+	cr_assert_str_eq(result,
+		"",
+		"Output not as expected."
+	);
+}
+
+Test(gnl_test_suite, test_file_one_shor_line_no_end_nl)
+{
+	int fd;
+	char *str;
+	char result[64] = "";
+
+	fd = open("examples/one_short_line_no_nl.txt", O_RDONLY);
+	while ((str = get_next_line(fd)))
+	{
+		ft_strcat(result, str);
+		free(str);
+	}
+	close(fd);
+	cr_assert_str_eq(result, "Short.");
 }
 
 Test(gnl_test_suite, test_file_nl_start_end)
 {
-    int fd;
-    char *str;
-    char result[64] = "";
+	int fd;
+	char *str;
+	char result[64] = "";
 
-    fd = open("examples/new_line_start_end.txt", O_RDONLY);
-    while ((str = get_next_line(fd)))
+	fd = open("examples/new_line_start_end.txt", O_RDONLY);
+	while ((str = get_next_line(fd)))
 	{
 		ft_strcat(result, str);
-        free(str);
-    }
-    close(fd);
-    cr_assert_str_eq(result, 
+		free(str);
+	}
+	close(fd);
+	cr_assert_str_eq(result, 
 		"\n"
 		"This file contains new line start & end.\n"
 		"\n",
@@ -172,18 +197,18 @@ Test(gnl_test_suite, test_file_nl_start_end)
 
 Test(gnl_test_suite, test_short_file_nl_start_end)
 {
-    int fd;
-    char *str;
-    char result[64] = "";
+	int fd;
+	char *str;
+	char result[64] = "";
 
-    fd = open("examples/short_new_line_start_end.txt", O_RDONLY);
-    while ((str = get_next_line(fd)))
+	fd = open("examples/short_new_line_start_end.txt", O_RDONLY);
+	while ((str = get_next_line(fd)))
 	{
 		ft_strcat(result, str);
-        free(str);
-    }
-    close(fd);
-    cr_assert_str_eq(result, 
+		free(str);
+	}
+	close(fd);
+	cr_assert_str_eq(result, 
 		"\n"
 		"Short.\n"
 		"\n",
@@ -201,7 +226,7 @@ Test(gnl_test_suite, test_file_multiple_nls)
 	while((str = get_next_line(fd)))
 	{
 		ft_strcat(result, str);
-        free(str);
+		free(str);
 	}
 	fflush(stdout);
 	close(fd);
@@ -228,7 +253,7 @@ Test(gnl_test_suite, test_file_mixed)
 	while((str = get_next_line(fd)))
 	{
 		ft_strcat(result, str);
-        free(str);
+		free(str);
 	}
 	close(fd);
 	cr_assert_str_eq(result,
