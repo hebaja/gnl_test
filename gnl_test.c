@@ -6,16 +6,6 @@
 #include "criterion-2.4.2/include/criterion/criterion.h"
 #include "criterion-2.4.2/include/criterion/redirect.h"
 
-int ft_strlen(char *str)
-{
-	int size_arr = 0;
-	while (str[size_arr] != 0)
-	{
-		size_arr++;
-	}
-	return size_arr;
-}
-
 char	*ft_strcat(char *dest, char *src)
 {
 	int start;
@@ -118,6 +108,29 @@ Test(gnl_test_suite, test_file_one_short_line, .init=redirect_all_stdout)
 	fflush(stdout);
 	close(fd);
 	cr_assert_stdout_eq_str("Short.\n", "Output not as expected.");	
+}
+
+Test(gnl_test_suite, test_file_error, .init=redirect_all_stdout)
+{
+	int	fd;
+	char	*str;
+	fd = open("examples/nonexistent.txt", O_RDONLY);
+	while((str = get_next_line(fd)))
+		printf("%s", str);
+	fflush(stdout);
+	close(fd);
+	cr_assert_stdout_eq_str("", "Output not as expected.");	
+}
+
+Test(gnl_test_suite, test_file_error_high, .init=redirect_all_stdout)
+{
+	int	fd;
+	char	*str;
+	while((str = get_next_line(1000)))
+		printf("%s", str);
+	fflush(stdout);
+	close(fd);
+	cr_assert_stdout_eq_str("", "Output not as expected.");	
 }
 
 Test(gnl_test_suite, test_empty_file_nl)
